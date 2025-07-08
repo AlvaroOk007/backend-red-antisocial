@@ -31,7 +31,7 @@ const getPosts = async (_, res) => {
       return postJSON;
     });
 
-    res.status(200).json({ posts: postsFiltered });
+    res.status(200).json(postsFiltered);
   } catch (error) {
     console.error(`Error al obtener los posts: ${error}`);
     res.status(500).json({ error: "Error al obtener los posts" });
