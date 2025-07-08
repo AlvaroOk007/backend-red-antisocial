@@ -1,0 +1,89 @@
+tag:
+  - name: PostTag
+    description: Peticiones para realizar sobre posteos
+components:
+  schemas:
+    PostTag:
+      type: object
+      properties:
+        PostId:
+          type: integer
+          example: 1
+          description: Id del posteo al que pertenece la etiqueta.
+        TagId:
+          type: integer
+          example: 1
+          description: Id de la etiqueta asociada al posteo.
+paths:
+  /post-tags/post/{postId}:
+    get:
+      tags:
+        - PostTag
+      summary: Retorna todas las etiquetas de un posteo.
+      description: Obtener todas las etiquetas de un posteo por su id.
+      operationId: getPostTags
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: Id del posteo a buscar.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Operacion realizada.
+        "404":
+          description: No se encontraron etiquetas.
+        "500":
+          description: Error en el servidor al solicitar las etiquetas del posteo.
+  /post-tags:
+    post:
+      tags:
+        - PostTag
+      summary: Permite crear una etiqueta para un posteo.
+      description: Crear una etiqueta para un posteo existente.
+      operationId: createPostTag
+      requestBody:
+        description: Crea una etiqueta para un posteo
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostTag"
+            example:
+              PostId: 1
+              TagId: 1
+        required: true
+      responses:
+        "200":
+          description: Operacion realizada.
+        "404":
+          description: No se encontro el posteo o la etiqueta.
+        "500":
+          description: Error en el servidor al crear la etiqueta.
+  /post-tags/post/{postId}/tag/{tagId}:
+    delete:
+      tags:
+        - PostTag
+      summary: Permite eliminar una etiqueta de un posteo.
+      description: Eliminar una etiqueta de un posteo existente.
+      operationId: deletePostTag
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: Id del posteo al que pertenece la etiqueta.
+          schema:
+            type: integer
+        - name: tagId
+          in: path
+          required: true
+          description: Id de la etiqueta a eliminar.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Operacion realizada.
+        "404":
+          description: No se encontro el posteo o la etiqueta.
+        "500":
+          description: Error en el servidor al eliminar el posteo o la etiqueta.

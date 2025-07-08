@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "d94a975a-bdfa-477b-8c69-8d3b3c03b763",
+		"name": "Colecciones de PostTag",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45056375",
+		"_collection_link": "https://brendalera-8798960.postman.co/workspace/Brenda-Lera's-Workspace~c01f6eda-3017-4f21-8118-39bc52167a3f/collection/45056375-d94a975a-bdfa-477b-8c69-8d3b3c03b763?action=share&source=collection_link&creator=45056375"
+	},
+	"item": [
+		{
+			"name": "Crear un tag para un posteo existente",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"PostId\": 8,\r\n  \"TagId\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/post-tags",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post-tags"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear un tag para un posteo existente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"PostId\": 8,\r\n  \"TagId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/post-tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post-tags"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1d-MsJddiVo5Ffmdr/2kgl/zNPq+bw\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 May 2025 06:55:04 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"PostId\": 8,\n    \"TagId\": 1\n}"
+				},
+				{
+					"name": "Error al asociar una etiqueta o un post inexistente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"PostId\": 8,\r\n  \"TagId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/post-tags",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post-tags"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "432"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1b0-y35Em8oSe+KXuPC09mR8UQOPN0s\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 May 2025 07:02:48 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Error en el servidor\",\n    \"error\": {\n        \"name\": \"SequelizeForeignKeyConstraintError\",\n        \"parent\": {\n            \"errno\": 19,\n            \"code\": \"SQLITE_CONSTRAINT\",\n            \"sql\": \"INSERT INTO `PostTags` (`id`,`PostId`,`TagId`) VALUES (NULL,$1,$2);\"\n        },\n        \"original\": {\n            \"errno\": 19,\n            \"code\": \"SQLITE_CONSTRAINT\",\n            \"sql\": \"INSERT INTO `PostTags` (`id`,`PostId`,`TagId`) VALUES (NULL,$1,$2);\"\n        },\n        \"sql\": \"INSERT INTO `PostTags` (`id`,`PostId`,`TagId`) VALUES (NULL,$1,$2);\",\n        \"parameters\": {}\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Retorna todos los tags de un posteo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/post-tags/post/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post-tags",
+						"post",
+						"11"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Retorna todos los tags de un posteo",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post-tags/post/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post-tags",
+								"post",
+								"8"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "71"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"47-kTTNQ8kM8RCHGw8MjMjDfX8RSV4\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 May 2025 06:57:47 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"description\": \"post prueba\",\n        \"PostTag\": {\n            \"id\": 1,\n            \"PostId\": 8,\n            \"TagId\": 1\n        }\n    }\n]"
+				},
+				{
+					"name": "No se encontro etiquetas relacionadas al posteo",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post-tags/post/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post-tags",
+								"post",
+								"11"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"29-b2twMb2tad1F44aONW3Um7Xsfcc\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 May 2025 07:01:51 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"No se encontraron etiquetas\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Elimina una etiqueta de un posteo por id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/post-tags/post/5/tag/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post-tags",
+						"post",
+						"5",
+						"tag",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Elimina una etiqueta de un posteo por id",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post-tags/post/8/tag/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post-tags",
+								"post",
+								"8",
+								"tag",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "98"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"62-LFADFBKIej/mfwB2mDdhPF2GsQ4\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 May 2025 07:00:02 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 8,\n    \"description\": \"Nueva description\",\n    \"publicationDate\": \"2025-05-19T04:29:36.436Z\",\n    \"UserId\": 1\n}"
+				},
+				{
+					"name": "Error al consultar por un id no encontrado",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/post-tags/post/5/tag/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"post-tags",
+								"post",
+								"5",
+								"tag",
+								"1"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "45"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2d-WtvdBZClmObr+lVEdKPbaKqx47Y\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 May 2025 07:01:13 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Error en el servidor\",\n    \"error\": {}\n}"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,160 @@
+tags:
+  - name: Comment
+    description: Peticiones para realizar sobre comentarios
+
+paths: 
+  /comments:
+    get:
+      tags:
+        - Comment
+      summary: Obtener todos los comentarios.
+      description: Obtener todos los comentarios.
+      operationId: getComments
+      responses:
+        "200":
+          description: Lista de comentarios.
+        "204":
+          description: No hay contenido.
+        "404":
+          description: No se encontraron comentarios.
+        "500":
+          description: Error interno del servidor.
+
+    post:
+      tags:
+        - Comment
+      summary: Crear un nuevo comentario.
+      description: Crear un nuevo comentario.
+      operationId: createComment
+      requestBody:
+        description: crear un nuevo comentario.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        "201":
+          description: Comentario creado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        "400":
+          description: Solicitud incorrecta
+        "500":
+          description: Error interno del servidor
+
+  /comments/{id}:
+    get:
+      tags:
+        - Comment
+      summary: Consultar un comentario por ID.
+      description: Consultar un comentario por ID.
+      operationId: getCommentById
+      parameters:
+        - name: id
+          in: path
+          description: ID del comentario a consultar
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Comentario devuelto.
+        "204":
+          description: No hay contenido.
+        "404":
+          description: No se encontro el comentario.
+        "500":
+          description: Error interno del servidor.    
+
+    put:
+      tags:
+        - Comment
+      summary: Actualizar un comentario por ID.
+      description: Actualizar un comentario por ID.
+      operationId: updateComment
+      parameters:
+        - name: id
+          in: path
+          description: ID del comentario a actualizar
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentInput'
+      responses:
+        "201":
+          description: Comentario actualizado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        "204":
+          description: No hay contenido.
+        "400":
+          description: Solicitud incorrecta.
+        "404":
+          description: No se encontro el comentario.
+        "500":
+          description: Error interno del servidor.
+
+    delete:
+      tags:
+        - Comment
+      summary: Eliminar un comentario por ID.
+      description: Eliminar un comentario por ID.
+      operationId: deleteCommentById
+      parameters:
+        - name: id
+          in: path
+          description: ID del comentario a eliminar
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Comentario eliminado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        "204":
+          description: No hay contenido.
+        "400":
+          description: Solicitud incorrecta.
+        "404":
+          description: No se encontro el comentario.
+        "500":
+          description: Error interno del servidor.
+
+components: 
+  schemas:
+    Comment:
+      type: object
+      properties:
+        content:
+          type: string
+          example: "Este es un comentario de prueba"
+          description: Contenido del comentario.
+        UserId:
+          type: integer
+          example: 1
+          description: Id del usuario que creo el comentario.
+        PostId:
+          type: integer
+          example: 1
+          description: Id del posteo al que pertenece el comentario.
+
+    CommentInput:
+      type: object
+      properties:
+        content:
+          type: string
+          example: "nuevo comentario"
+          description: "contenido nuevo del comentario"

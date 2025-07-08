@@ -1,0 +1,166 @@
+openapi: 3.0.0
+info:
+  title: RED ANTISOCIAL PERSIDEV
+  version: "1.0.0"
+  description: API para la red antisocial de PERSIDEV
+servers:
+  url: "http://localhost:3001"
+  description: Servidor local
+components: 
+  schemas:
+    putTag:
+      type: object
+      properties:
+        description:
+          type: string
+          example: "EstiquetaDePrueba"
+          description: Descripcion de la etiqueta.
+    
+    postTag:
+      type: object
+      properties:
+        description:
+          type: string
+          example: "EstiquetaDePrueba"
+          description: Descripcion de la etiqueta.
+#-----------------------------------------------------------------
+tags:
+  - name: Tag
+    description: Peticiones para realizar sobre las etiquetas
+paths: 
+  /tags:
+  #Post para crear etiqueta
+    post:
+      tags:
+        - Tag
+      summary: Permite crear una etiqueta.
+      description: Permite crear una etiqueta a la base de datos y retornando el id de la etiqueta agregada y la descripcion.
+      operationId: createTag
+      requestBody:
+        description: Crea una etiqueta
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/postTag"
+        required: true
+      responses:
+        "201":
+          description: Etiqueta creada.
+        "400":
+          description: Error en la entrada de datos.
+        "500":
+          description: Error en el servidor.
+  #Get para obtener todas las etiquetas
+    get:
+      tags:
+        - Tag
+      summary: Retorna todas las etiquetas.
+      description: Obtener un array con todas las etiquetas disponibles.
+      operationId: getTags
+      
+      responses:
+        "200":
+          description: Lista de etiquetas disponibles.
+        "404":
+          description: No se encontraron etiquetas.
+        "500":
+          description: Error en el servidor al solicitar las etiquetas.
+
+  /tags/{id}:
+    delete:
+      tags:
+        - Tag
+      summary: Elimina una etiqueta por numero de ID.
+      description: Permite eliminar una etiqueta de la base de datos retornando el tag eliminado.
+      operationId: deleteTagById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id del tag a eliminar.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Etiqueta eliminada.
+        "400":
+          description: ID invalido.
+        "404":
+          description: No se encontro el tag.
+        "500":
+          description: Error en el servidor al procesar la solicitud.
+
+    put:
+      tags:
+        - Tag
+      summary: Actualizar una etiqueta por su id.
+      description: Permite actualizar una etiqueta a la base de datos retornando el tag actualizado.
+      operationId: updateTagById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id del tag a actualizar.
+          schema:
+            type: integer
+      requestBody:
+        description: Actualiza un tag
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/putTag"
+        required: true
+      responses:
+        "200":
+          description: Etiqueta actualizada.
+        "400":
+          description: Error en la entrada de datos.
+        "404":
+          description: No se encontro el tag.
+        "500":
+          description: Error en el servidor al procesar la solicitud.
+
+    get:
+      tags:
+        - Tag
+      summary: Obtener una etiqueta por su id.
+      description: Retorna una etiqueta por su numero de id.
+      operationId: getTagById
+      parameters:
+        - name: id
+          in: path
+          description: Id de la etiqueta a buscar.
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Etiqueta obtenida.
+        "404":
+          description: No se encontro el tag.
+        "500":
+          description: Error en el servidor al procesar la solicitud.
+        
+  /tags/{id}/posts:
+    get:
+      tags:
+        - Tag
+      summary: Retorna todas los posts de una etiqueta.
+      description: Obtener un array con todos los posts que tiene asociada una etiqueta segun id enviado por url.
+      operationId: verPosts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id de la etiqueta a buscar sus posts.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Posts obtenidos.
+        "400":
+          description: Error en la entrada de datos.
+        "404":
+          description: No se encontraron posteos del tag.
+        "500":
+          description: Error en el servidor al solicitar posteos.

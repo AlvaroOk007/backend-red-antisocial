@@ -1,0 +1,126 @@
+components: 
+  schemas:
+    Image:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "http://imagenDePrueba.png"
+          pattern: "\\.(jpg|jpeg|png|gif|webp)$"
+          description: URL de imagen.
+        PostId:
+          type: integer
+          example: 1
+          description: Id del posteo al que pertenece la imagen.
+
+    ImageInput:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "http://nuevaImagenDePrueba.png"
+          pattern: "\\.(jpg|jpeg|png|gif|webp)$"
+          description: URL de imagen.
+
+
+tags:
+  - name: Image
+    description: Peticiones para realizar sobre imagenes
+
+paths: 
+  /images:
+    get:
+      tags:
+        - Image
+      summary: Obtener todas las imagenes.
+      description: Obtener todas las imagenes.
+      operationId: getImages
+      responses:
+        "200":
+          description: Lista de imagenes.
+        "204":
+          description: No hay contenido.
+        "404":
+          description: No se encontraron las imagenes.
+        "500":
+          description: Error interno del servidor.
+
+    post:
+      tags:
+        - Image
+      summary: Crear una nueva imagen.
+      description: Crear una nueva imagen.
+      operationId: createImage
+      requestBody:
+        description: Crear una nueva imagen.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        "201":
+          description: Imagen creada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        "400":
+          description: Solicitud incorrecta
+        "500":
+          description: Error interno del servidor
+
+  /images/{id}:
+    get:
+      tags:
+        - Image
+      summary: Consultar una imagen por ID.
+      description: Consultar una imagen por ID.
+      operationId: getImageById
+      parameters:
+        - name: id
+          in: path
+          description: ID de la imagen a consultar
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: imagen devuelta.
+        "204":
+          description: No hay contenido.
+        "404":
+          description: No se encontro la imagen.
+        "500":
+          description: Error interno del servidor.    
+
+    delete:
+      tags:
+        - Image
+      summary: Eliminar una imagen por ID.
+      description: Eliminar una imagen por ID.
+      operationId: deleteImageById
+      parameters:
+        - name: id
+          in: path
+          description: ID de la imagen a eliminar
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: imagen eliminada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+        "204":
+          description: No hay contenido.
+        "400":
+          description: Solicitud incorrecta.
+        "404":
+          description: No se encontro la imagen.
+        "500":
+          description: Error interno del servidor.

@@ -1,0 +1,264 @@
+tags:
+  - name: User
+    description: Peticiones para realizar sobre usuarios
+paths:
+  /users:
+  #Post para crear un usuario
+    post:
+      tags:
+        - User
+      summary: Permite crear un usuario.
+      description: Permite crear un usuario a la base de datos retornando el usuario agregado
+      operationId: createUser
+      requestBody:
+        description: Crea un usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+        required: true
+      responses:
+        '201':
+          description: Usuario creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: >
+            Solicitud inválida. Posibles causas:
+            - El campo 'email' o 'nickname' es inválido (falló la validación del schema).
+            - El 'email' o 'nickname' ya están registrados (verificado por middlewares).
+        '500':
+          description: Error interno en el servidor
+    #Get que obtiene todos los usuarios
+    get:
+      tags:
+        - User
+      summary: Retorna todos los usuarios.
+      description: Retorna un array de objetos que contiene todos los usuarios disponibles.
+      operationId: getUsers
+      responses:
+        '200':
+          description: Listado de los usuarios
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersArray'
+        '500':
+          description: Error en el servidor al solicitar los usuarios.
+    
+  /users/{id}:
+    delete:
+      tags:
+        - User
+      summary: Elimina un usuario por ID.
+      description: Elimina un usuario por el ID mandado por url.
+      operationId: deleteUser 
+      parameters:
+        - name: id
+          in: path
+          description: ID de un usuario
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuario eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: El id dado es invalido
+        '404':
+          description: No se encontró un usuario con el id dado.
+        '500':
+          description: Error interno del servidor al procesar la solicitud.
+  
+    put:
+      tags:
+        - User
+      summary: actualiza un usuario por ID.
+      description: actualiza un usuario por el ID mandado por url.
+      operationId: editUser
+      parameters:
+        - name: id
+          in: path
+          description: ID de un usuario
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Editar un usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+        required: true
+      responses:
+        '200':
+          description: Usuario editado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: > 
+            - Error en los datos: por ejemplo ya existe el nickName o el email.
+        '404':
+          description: No se encontró un usuario con el id dado.
+        '500':
+          description: Error interno del servidor al procesar la solicitud.
+  
+    #Get que obtiene un usuario por ID
+    get:
+      tags:
+        - User
+      summary: Obtiene un usuario por ID.
+      description: Obtiene un usuario por el ID mandado por url.
+      operationId: getUserByPk
+      parameters:
+        - name: id
+          in: path
+          description: ID de un usuario
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuario obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: El ID ingresado es inválido (por ejemplo, no es un entero positivo)
+        '404':
+          description: No se encontró un usuario con el id dado.
+        '500':
+          description: Error interno del servidor al procesar la solicitud.
+  /users/nickname/{nickName}:
+    get:
+      tags: 
+        - User
+      summary: Obtiene un usuario por nickName.
+      description: Obtiene un usuario por el nickName mandado por url.
+      operationId: getUserByNickName
+      parameters:
+        - name: nickName
+          in: path
+          description: nickName de un usuario
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuario obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: El nickName ingresado es inválido (por ejemplo, es un string de menos de 4 caracteres)
+        '404':
+          description: No se encontró un usuario con el nickName dado.
+        '500':
+          description: Error interno del servidor al procesar la solicitud.
+  /users/{id}/posts:
+    get:
+      tags: 
+        - User
+      summary: Retorna un usuario con sus posts.
+      description: Obtiene todos los posts de un usuario obtenido por la id de los parametros.
+      operationId: getUserWithPosts
+      parameters:
+        - name: id
+          in: path
+          description: id del usuario
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuario con sus posts obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPost'
+        '400':
+          description: El id ingresado es inválido (por ejemplo, no es un entero positivo)
+        '404':
+          description: No se encontró un usuario con el id dado .
+        '500':
+          description: Error interno del servidor al procesar la solicitud.
+
+      
+# Schemas
+components:
+  schemas:
+    #Esquema de un usuario
+    User:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 1
+        nickName:
+          type: string
+          example: 'unNickPrueba'
+        email:
+          type: string
+          format: email
+          example: unMai@algo.com
+      required:
+        - id
+        - nickName
+        - email
+    #Esquema de un posible input para crear un usuario
+    UserInput:
+      type: object
+      properties:
+        nickName:
+          type: string
+          example: 'unNickPrueba'
+        email:
+          type: string
+          format: email
+          example: unMai@algo.com
+      required:
+        - nickName
+        - email
+    #Schema de los usuarios
+    UsersArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+    
+    Post:
+      type: object
+      properties:
+        description: 
+          type: string
+          example: Estoy sentado
+        publicationDate:
+          type: string
+          example: "2025-05-05"
+    UserPost:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nickName:
+          type: string
+          example: unNickPrueba
+        email:
+          type: string
+          format: email
+          example: unMai@algo.com
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+    
