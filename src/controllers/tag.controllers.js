@@ -2,7 +2,7 @@ const { Tag } = require('../db/models')
 // Get
 const getTags = async (_, res) => {
   const data = await Tag.findAll({})
-  res.status(200).json({ data })
+  res.status(200).json(data)
 }
 // Get
 const getTagById = async (req, res) => {
